@@ -1,5 +1,16 @@
 # OpenMP-101
 
+## 0. Fast Guide: OMP in Caffe
+
+### 0.1 What's the OMP
+
+- an easy, portable and scalable way to parallelize applications for  many cores. – Multi-threaded, shared memory model (like pthreads) 
+- a standard API +  – omp  pragmas are supported by major C/C++ , Fortran compilers (gcc, icc, etc).  
+ 
+A lot of good tutorials on-line: https://computing.llnl.gov/tutorials/openMP/ http://openmp.org/mp-documents/omp-hands-on-SC08.pdf 
+
+### 0.2 OpenMP programming model 
+
 ## Tutorial1: Introduction to OpenMP
 
 Intel’s Tim Mattson’s Introduction to OpenMP video tutorial is now available.
@@ -43,10 +54,12 @@ Outline:
 
 Thanks go to the University Program Office at Intel for making this tutorial available.
 
-## Tutorial2:
+## Tutorial2: OpenMP
 
 Author: Blaise Barney, Lawrence Livermore National Laboratory
 
 [OpenMP](https://computing.llnl.gov/tutorials/openMP/)
 
+## Tutorial3: OpenMP tutorial | Goulas Programming Soup  
+https://goulassoup.wordpress.com/2011/10/28/openmp-tutorial/
 
