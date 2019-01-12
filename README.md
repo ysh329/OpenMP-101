@@ -11,6 +11,74 @@ A lot of good tutorials on-line: https://computing.llnl.gov/tutorials/openMP/ ht
 
 ### 0.2 OpenMP programming model 
 
+
+### 0.3 Example
+
+```c
+int main(int argc, char *argv[])
+{
+    int i;
+    float a[N], b[N], c[N];
+    
+    for(i=0; i<N; i++)
+    {
+        a[i] = b[i] = 1.0;
+    }
+    
+    for(i=0; i<N; i++)
+    {
+        c[i] = a[i] + b[i];
+    }
+}
+```
+
+
+```c
+#include <omp.h>
+int main(int argc, char *argv[])
+{
+    int i;
+    float a[N], b[N], c[N];
+#pragma omp parallel for
+    for(i=0; i<N; i++)
+    {
+        a[i] = b[i] = 1.0;
+    }
+#parama omp parallel for
+    for(i=0; i<N; i++)
+    {
+        c[i] = a[i] + b[i];
+    }
+}
+```
+
+
+```c
+#include <omp.h>
+#include <stdio.h>
+#include <stdlib.h>
+#define N (100)
+int main(int argc, char *argv[])
+{
+    int nthreads, tid, i;
+    float a[N], b[N], c[N];
+    nthreads = omp_get_num_threads();
+    printf("Number of threads = %d\n", nthreads);
+#pragma omp parallel for
+    for(i=0; i<N; i++)
+    {
+        a[i] = b[i] = 1.0;
+    }
+#parama omp parallel for
+    for(i=0; i<N; i++)
+    {
+        c[i] = a[i] + b[i];
+        tid = omp_get_thread_num();
+        printf("Thread %d: c[%d]=%f\n", tid, i, c[i]);
+    }
+}
+```
+
 ## Tutorial1: Introduction to OpenMP
 
 Intel’s Tim Mattson’s Introduction to OpenMP video tutorial is now available.
