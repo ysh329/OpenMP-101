@@ -19,17 +19,17 @@ naive implementation
 ```c
 int main(int argc, char *argv[])
 {
-    int i;
+    int idx;
     float a[N], b[N], c[N];
     
-    for(i=0; i<N; i++)
+    for(idx=0; idx<N; ++idx)
     {
-        a[i] = b[i] = 1.0;
+        a[idx] = b[idx] = 1.0;
     }
     
-    for(i=0; i<N; i++)
+    for(idx=0; idx<N; ++idx)
     {
-        c[i] = a[i] + b[i];
+        c[idx] = a[idx] + b[idx];
     }
 }
 ```
@@ -40,17 +40,17 @@ omp implementation
 #include <omp.h>
 int main(int argc, char *argv[])
 {
-    int i;
+    int idx;
     float a[N], b[N], c[N];
 #pragma omp parallel for
-    for(i=0; i<N; i++)
+    for(idx=0; idx<N; ++idx)
     {
-        a[i] = b[i] = 1.0;
+        a[idx] = b[idx] = 1.0;
     }
 #pragma omp parallel for
-    for(i=0; i<N; i++)
+    for(idx=0; idx<N; ++idx)
     {
-        c[i] = a[i] + b[i];
+        c[idx] = a[idx] + b[idx];
     }
 }
 ```
@@ -62,21 +62,21 @@ int main(int argc, char *argv[])
 #define N (100)
 int main(int argc, char *argv[])
 {
-    int nthreads, tid, i;
+    int nthreads, tid, idx;
     float a[N], b[N], c[N];
     nthreads = omp_get_num_threads();
     printf("Number of threads = %d\n", nthreads);
 #pragma omp parallel for
-    for(i=0; i<N; i++)
+    for(idx=0; idx<N; ++idx)
     {
-        a[i] = b[i] = 1.0;
+        a[idx] = b[idx] = 1.0;
     }
 #pragma omp parallel for
-    for(i=0; i<N; i++)
+    for(idx=0; idx<N; ++idx)
     {
-        c[i] = a[i] + b[i];
+        c[idx] = a[idx] + b[idx];
         tid = omp_get_thread_num();
-        printf("Thread %d: c[%d]=%f\n", tid, i, c[i]);
+        printf("Thread %d: c[%d]=%f\n", tid, idx, c[idx]);
     }
 }
 ```
@@ -112,6 +112,8 @@ export OMP_NUM_THREADS=8
 float *vec_dotprod(const float *x, const float *y, const int len, float *res)
 {
     assert(x && y && res && len>0);
+    int nthreads = omp_get_num_threads();
+    printf("Number of threads = %d\n", nthreads);
     #pragma omp parallel for
     for(int idx=0; idx<len; ++idx)
     {
@@ -131,10 +133,15 @@ float *mat_mult(const int m, const int n, const int k,
 {
     assert(a && b && c && lda>0 && ldb>0 && ldc>0);
     assert(m>0 && n>0 && k>0);
+    int nthreads = omp_get_num_threads();
+    printf("Number of threads = %d\n", nthreads);
+    #pragma omp parallel for
     for(int i=0; i<m; ++i)
     {
+        #pragma omp parallel for
         for(int j=0; j<n; ++j)
         {
+            #pragma omp parallel for
             for(int p=0; p<k; ++p)
             {
                 C(i, j) += A(i, p) * B(p, j);
@@ -147,6 +154,9 @@ float *mat_mult(const int m, const int n, const int k,
 float *relu(float *x, const int len, float *res)
 {
     assert(x && len>0);
+    int nthreads = omp_get_num_threads();
+    printf("Number of threads = %d\n", nthreads);
+    #pragma omp parallel for
     for(int idx=0; idx<len; ++idx)
     {
         res[idx] = max(0, x[idx]);
