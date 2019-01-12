@@ -121,7 +121,7 @@ float *vec_dotprod(const float *x, const float *y, const int len, float *res)
         res[idx] = x[idx] * y[idx];
     }
     return res;
-}}
+}
 
 
 #define A(i,j) a[(i)*lda+(j)]
