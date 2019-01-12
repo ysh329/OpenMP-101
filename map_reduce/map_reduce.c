@@ -22,7 +22,6 @@ void print(const DTYPE *in, const int len)
 DTYPE *init(DTYPE *in, const int len, const DTYPE val)
 {
     assert(in && len>0);
-    //#pragma omp parallel for
     #pragma omp parallel for
     for(int idx=0; idx<len; ++idx)
     {
@@ -46,7 +45,7 @@ DTYPE reduce(reduce_func_t f, const DTYPE *in, const int len)
 {
     assert(f && in && len>0);
     DTYPE res = 0;
-    #pragma omp parallel for
+    //#pragma omp parallel for
     for(int idx=0; idx<len; ++idx)
     {
         res = f(res, in[idx]);
@@ -91,6 +90,7 @@ int main(int argc, char *argv[])
     DTYPE *mapped_a = map(poww, a, a, n);
     DTYPE *mapped_b = map(poww, b, b, n);
     DTYPE *mapped_c = map(poww, c, c, n);
+
     print(a, n);
     print(b, n);
     print(c, n);
