@@ -1,6 +1,6 @@
 # OpenMP-101
 
-## Tutorial: Introduction to OpenMP
+## Tutorial1: Introduction to OpenMP
 
 Intel’s Tim Mattson’s Introduction to OpenMP video tutorial is now available.
 
@@ -41,6 +41,12 @@ Outline:
 
 ### Unit 5: Recapitulation
 
-»Introduction to OpenMP Tutorial
-
 Thanks go to the University Program Office at Intel for making this tutorial available.
+
+## Tutorial2:
+
+Author: Blaise Barney, Lawrence Livermore National Laboratory
+
+[OpenMP](https://computing.llnl.gov/tutorials/openMP/)
+
+
