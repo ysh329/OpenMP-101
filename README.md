@@ -11,6 +11,7 @@ A lot of good tutorials on-line: https://computing.llnl.gov/tutorials/openMP/ ht
 
 ### 0.2 OpenMP programming model 
 
+![omp program model](./assets/omp1.png)
 
 ### 0.3 Example
 
