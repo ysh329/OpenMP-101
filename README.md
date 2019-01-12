@@ -96,7 +96,7 @@ icc -openmp omp_vecadd.c -o vecad
 Control number of threads through set enviroment variable on command line:
 
 ```shell
-export OMP_NUM_THREADS-8 
+export OMP_NUM_THREADS=8 
 ```
 
 ### 0.5 Exercise
@@ -106,8 +106,6 @@ export OMP_NUM_THREADS-8
   - matrix-matrix multiply
   - 2D matrix convolution
 2. Add openmp support to relu, and max-pooling layers 
-
-
 
 ## Tutorial1: Introduction to OpenMP
 
