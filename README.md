@@ -14,6 +14,8 @@ A lot of good tutorials on-line: https://computing.llnl.gov/tutorials/openMP/ ht
 
 ### 0.3 Example
 
+naive implementation
+
 ```c
 int main(int argc, char *argv[])
 {
@@ -32,6 +34,7 @@ int main(int argc, char *argv[])
 }
 ```
 
+omp implementation
 
 ```c
 #include <omp.h>
@@ -44,14 +47,13 @@ int main(int argc, char *argv[])
     {
         a[i] = b[i] = 1.0;
     }
-#parama omp parallel for
+#pragma omp parallel for
     for(i=0; i<N; i++)
     {
         c[i] = a[i] + b[i];
     }
 }
 ```
-
 
 ```c
 #include <omp.h>
@@ -69,7 +71,7 @@ int main(int argc, char *argv[])
     {
         a[i] = b[i] = 1.0;
     }
-#parama omp parallel for
+#pragma omp parallel for
     for(i=0; i<N; i++)
     {
         c[i] = a[i] + b[i];
@@ -78,6 +80,34 @@ int main(int argc, char *argv[])
     }
 }
 ```
+
+### 0.4 Compiling, linking etc 
+
+You need to add flag –fopenmp
+
+```shell
+# compile using gcc
+gcc -fopenmp omp_vecadd.c -o vecadd
+
+# compile using icc
+icc -openmp omp_vecadd.c -o vecad
+```
+
+Control number of threads through set enviroment variable on command line:
+
+```shell
+export OMP_NUM_THREADS-8 
+```
+
+### 0.5 Exercise
+
+1. Implement
+  - vector dot-product: c=<x,y>
+  - matrix-matrix multiply
+  - 2D matrix convolution
+2. Add openmp support to relu, and max-pooling layers 
+
+
 
 ## Tutorial1: Introduction to OpenMP
 
