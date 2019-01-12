@@ -55,6 +55,10 @@ int main(int argc, char []argv)
 
     // mat mult
     c = mat_mult(m, n, k, a, lda, b, ldb, c, ldc);
+
+    if(a) free(a); a = NULL;
+    if(b) free(b); b = NULL;
+    if(c) free(c); c = NULL;
    
     return 0;
 }
