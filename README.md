@@ -107,6 +107,54 @@ export OMP_NUM_THREADS=8
   - 2D matrix convolution
 2. Add openmp support to relu, and max-pooling layers 
 
+
+```cc
+float *vec_dotprod(const float *x, const float *y, const int len, float *res)
+{
+    assert(x && y && res && len>0);
+    #pragma omp parallel for
+    for(int idx=0; idx<len; ++idx)
+    {
+        res[idx] = x[idx] * y[idx];
+    }
+    return res;
+}}
+
+
+#define A(i,j) a[(i)*lda+(j)]
+#define B(i,j) b[(i)*ldb+(j)]
+#define C(i,j) c[(i)*ldc+(j)]
+float *mat_mult(const int m, const int n, const int k,
+                const float *a, const int lda,
+                const float *b, const int ldb, 
+                float *c, const int ldc)
+{
+    assert(a && b && c && lda>0 && ldb>0 && ldc>0);
+    assert(m>0 && n>0 && k>0);
+    for(int i=0; i<m; ++i)
+    {
+        for(int j=0; j<n; ++j)
+        {
+            for(int p=0; p<k; ++p)
+            {
+                C(i, j) += A(i, p) * B(p, j);
+            }
+        }
+    }
+    return c;
+}
+
+float *relu(float *x, const int len, float *res)
+{
+    assert(x && len>0);
+    for(int idx=0; idx<len; ++idx)
+    {
+        res[idx] = max(0, x[idx]);
+    }
+    return res;
+}
+```
+
 ## Tutorial1: Introduction to OpenMP
 
 Intel’s Tim Mattson’s Introduction to OpenMP video tutorial is now available.
