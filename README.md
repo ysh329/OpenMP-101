@@ -5,7 +5,8 @@
 ### 0.1 What's the OMP
 
 - an easy, portable and scalable way to parallelize applications for  many cores. – Multi-threaded, shared memory model (like pthreads) 
-- a standard API +  – omp  pragmas are supported by major C/C++ , Fortran compilers (gcc, icc, etc).  
+- a standard API
+- omp pragmas are supported by major C/C++ , Fortran compilers (gcc, icc, etc).  
  
 A lot of good tutorials on-line: https://computing.llnl.gov/tutorials/openMP/ http://openmp.org/mp-documents/omp-hands-on-SC08.pdf 
 
@@ -43,12 +44,12 @@ int main(int argc, char *argv[])
 {
     int idx;
     float a[N], b[N], c[N];
-#pragma omp parallel for
+    #pragma omp parallel for
     for(idx=0; idx<N; ++idx)
     {
         a[idx] = b[idx] = 1.0;
     }
-#pragma omp parallel for
+    #pragma omp parallel for
     for(idx=0; idx<N; ++idx)
     {
         c[idx] = a[idx] + b[idx];
@@ -67,12 +68,12 @@ int main(int argc, char *argv[])
     float a[N], b[N], c[N];
     nthreads = omp_get_num_threads();
     printf("Number of threads = %d\n", nthreads);
-#pragma omp parallel for
+    #pragma omp parallel for
     for(idx=0; idx<N; ++idx)
     {
         a[idx] = b[idx] = 1.0;
     }
-#pragma omp parallel for
+    #pragma omp parallel for
     for(idx=0; idx<N; ++idx)
     {
         c[idx] = a[idx] + b[idx];
@@ -154,7 +155,7 @@ float *mat_mult(const int m, const int n, const int k,
 
 float *relu(float *x, const int len, float *res)
 {
-    assert(x && len>0);
+    assert(x && len>0 && res);
     int nthreads = omp_get_num_threads();
     printf("Number of threads = %d\n", nthreads);
     #pragma omp parallel for
