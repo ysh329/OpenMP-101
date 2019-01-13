@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
     // init
     const size_t n = 10;
     float *x = calloc(10, sizeof(float));
-    memset(x, -1, n*sizeof(float));
+    memset(x, -1, n*sizeof(float)); // memset only can init value with 0 or -1
     print(x, n);
 
     // relu
