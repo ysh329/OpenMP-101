@@ -45,10 +45,12 @@ DTYPE reduce(reduce_func_t f, const DTYPE *in, const int len)
 {
     assert(f && in && len>0);
     DTYPE res = 0;
-    //#pragma omp parallel for
+    #pragma omp parallel for
     for(int idx=0; idx<len; ++idx)
     {
-        res = f(res, in[idx]);
+        DTYPE e = in[idx];
+        #pragma omp critical
+        res = f(res, e);
     }
     return res;
 }
