@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <string.h>
 
 #define DTYPE float
 
-struct layer
+// define structures
+typedef struct layer
 {
     char *name;
     struct layer* next;
@@ -23,6 +25,16 @@ struct layer
 
 } layer_t;
 
+// define functions
+layer_t *init_pooling(const char *name,
+                      const int ndim, const int *input_shape,
+                      const int ksize, const int pad, const int stride);
+void print_pooling(layer_t *l);
+layer_t *forward_pooling(layer_t *l);
+void print_pooling(layer_t *l);
+void destroy_pooling(layer_t *l);
+
+
 layer_t *init_pooling(const char *name,
                       const int ndim, const int *input_shape,
                       const int ksize, const int pad, const int stride)
@@ -30,6 +42,7 @@ layer_t *init_pooling(const char *name,
     assert(ndim>0 && input_shape && ksize>0 && pad>=0 && stride>0);
 
     layer_t *l         = calloc(1, sizeof(layer_t));
+    l->name = calloc(strlen(name), sizeof(char));
     strcpy(l->name, name);
     l->next            = NULL;
     int count          = 1;
@@ -50,6 +63,27 @@ layer_t *init_pooling(const char *name,
     return l;
 }
 
+void print_pooling(layer_t *l)
+{
+    assert(l);
+    printf("---- print_pooling ----\n");
+    printf("l->name:%s\n", l->name);
+    printf("l->input_shape:"); 
+    for(int idx=0; idx<l->ndim; ++idx) 
+        printf("%d ", l->input_shape[idx]);
+    printf("\n");
+    printf("l->output_shape:"); 
+    for(int idx=0; idx<l->ndim; ++idx) 
+        printf("%d ", l->output_shape[idx]);
+    printf("\n");
+    printf("l->count:%d\n",  l->count);
+    printf("l->ksize:%d\n",  l->ksize);
+    printf("l->pad:%d\n",    l->pad);
+    printf("l->stride:%d\n", l->stride);
+    printf("\n");
+    return;
+}
+
 layer_t *forward_pooling(layer_t *l)
 {
     //TODO
@@ -58,7 +92,8 @@ layer_t *forward_pooling(layer_t *l)
 
 void destroy_pooling(layer_t *l)
 {
-    assert(l && l->data &&
+    assert(l &&
+           l->data &&
            l->input_shape &&
            l->output_shape);
     if(l->data)         free(l->data);         l->data         = NULL;
@@ -82,14 +117,13 @@ int main(int argc, char *argv[])
     input_shape[2]   = 4;
     input_shape[3]   = 5;
 
-    layer_t pool = init_pooling(name, ndim, input_shape, ksize, pad, stride);
+    layer_t *l = init_pooling(name, ndim, input_shape, ksize, pad, stride);
 
     // forward pooling
     l = forward_pooling(l);
 
     // free
     destroy_pooling(l);
-    if(name) free(name); name = NULL;
     if(input_shape) free(input_shape); input_shape = NULL;
 
     return 0;
