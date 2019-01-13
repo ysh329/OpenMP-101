@@ -9,7 +9,7 @@
 void print_mat(const DTYPE *mat, const int r, const int c, const char *name);
 DTYPE *init_mat(DTYPE *mat, const int r, const int c, const DTYPE val);
 DTYPE *rand_mat(DTYPE *mat, const int r, const int c, const DTYPE min_val, const DTYPE max_val);
-float *mat_mult(const int m, const int n, const int k,
+DTYPE *mat_mult(const int m, const int n, const int k,
                 const DTYPE *a, const int lda,
                 const DTYPE *b, const int ldb, 
                       DTYPE *c, const int ldc);
@@ -57,7 +57,7 @@ DTYPE *rand_mat(DTYPE *mat, const int r, const int c, const DTYPE min_val, const
 #define A(i,j) a[(i)*lda+(j)]
 #define B(i,j) b[(i)*ldb+(j)]
 #define C(i,j) c[(i)*ldc+(j)]
-float *mat_mult(const int m, const int n, const int k,
+DTYPE *mat_mult(const int m, const int n, const int k,
                 const DTYPE *a, const int lda,
                 const DTYPE *b, const int ldb, 
                       DTYPE *c, const int ldc)
@@ -69,10 +69,10 @@ float *mat_mult(const int m, const int n, const int k,
     #pragma omp parallel for
     for(int i=0; i<m; ++i)
     {
-        #pragma omp parallel for
+        //#pragma omp parallel for
         for(int j=0; j<n; ++j)
         {
-            #pragma omp parallel for
+            //#pragma omp parallel for
             for(int p=0; p<k; ++p)
             {
                 C(i, j) += A(i, p) * B(p, j);

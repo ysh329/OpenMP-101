@@ -1,3 +1,3 @@
-# relu
+# pooling
 
 Compile using `./make.sh`.
