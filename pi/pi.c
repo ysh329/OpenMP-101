@@ -10,7 +10,7 @@ History: Written by Tim Mattson, 11/99.
 */
 #include <stdio.h>
 #include <omp.h>
-static long max_iter_num = 100000000;
+static long max_iter_num = 1000000000;
 double step;
 int main ()
 {
