@@ -109,6 +109,11 @@ export OMP_NUM_THREADS=8
   - 2D matrix convolution
 2. Add openmp support to relu, and max-pooling layers 
 
+> ## note
+> synch and critical sections,
+> - use critical section to reduce false sharing
+> - BUT don't put critical sections inside tight loops - doing so serializes things
+
 ## Tutorial1: Introduction to OpenMP
 
 Intel’s Tim Mattson’s Introduction to OpenMP video tutorial is now available.
@@ -160,4 +165,8 @@ Author: Blaise Barney, Lawrence Livermore National Laboratory
 
 ## Tutorial3: OpenMP tutorial | Goulas Programming Soup  
 https://goulassoup.wordpress.com/2011/10/28/openmp-tutorial/
+
+## reference
+
+- [lnarmour/omp-tutorial](https://github.com/lnarmour/omp-tutorial)
 
