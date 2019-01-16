@@ -1,10 +1,7 @@
+# Tips to Improve Performance for Popular Deep Learning Frameworks on CPUs
 
-
-[Tips to Improve Performance for Popular Deep Learning Frameworks on CPUs | Intel® Software](https://software.intel.com/en-us/articles/tips-to-improve-performance-for-popular-deep-learning-frameworks-on-multi-core-cpus)
-
-# Tips to Improve Performance for Popular Deep Learning Frameworks on CPUs | Intel® Software
-
-By [Anju P. (Intel)](https://software.intel.com/en-us/user/1635659), published on June 1, 2018
+- By [Anju P. (Intel)](https://software.intel.com/en-us/user/1635659), published on June 1, 2018
+- [Tips to Improve Performance for Popular Deep Learning Frameworks on CPUs | Intel® Software](https://software.intel.com/en-us/articles/tips-to-improve-performance-for-popular-deep-learning-frameworks-on-multi-core-cpus)
 
 ## Introduction
 
