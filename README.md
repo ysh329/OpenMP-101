@@ -114,6 +114,10 @@ export OMP_NUM_THREADS=8
 > - use critical section to reduce false sharing
 > - BUT don't put critical sections inside tight loops - doing so serializes things
 
+### 0.6 Tips to Improve Performance for Popular Deep Learning Frameworks on CPUs
+
+[improve_performance_for_deep_learning_frameworks_on_cpu](./improve_performance_for_deep_learning_frameworks_on_cpu.md)
+
 ## Tutorial1: Introduction to OpenMP
 
 Intel’s Tim Mattson’s Introduction to OpenMP video tutorial is now available.
