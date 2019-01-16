@@ -1,5 +1,9 @@
 # OpenMP-101
 
+> ## Optimization Notice
+> ![opt-img-01](./assets/opt-notice-en_080411.gif)
+> ![opt-img-zh](./assets/Chinese.gif)
+
 ## 0. Fast Guide: OMP in Caffe
 
 ### 0.1 What's the OMP
