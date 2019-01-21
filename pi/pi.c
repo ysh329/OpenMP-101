@@ -14,22 +14,23 @@ static long max_iter_num = 1000000000;
 double step;
 int main ()
 {
-    int i;
-    double x, pi, sum = 0.0;
+    register double x, pi, sum = 0.0;
     double start_time, run_time;
 
     step = 1.0/(double) max_iter_num;
     start_time = omp_get_wtime();
 
-    for(int i = 1; i <= max_iter_num; i++)
+    for(register int i = 1; i <= max_iter_num; ++i)
     {
-        x = (i-0.5)*step;
-        sum = sum + 4.0/(1.0+x*x);
+        x = (i - 0.5) * step;
+        sum += 4.0 / (1.0 + x*x);
     }
 
     pi = step * sum;
     run_time = omp_get_wtime() - start_time;
-    printf("\n pi with %ld steps is %lf in %lf seconds\n ",max_iter_num,pi,run_time);
+    printf("pi: %.60f\n", pi);
+    printf("step: %ld\n", max_iter_num);
+    printf("time: %f\n", run_time);
 
     return 0;
 }	
