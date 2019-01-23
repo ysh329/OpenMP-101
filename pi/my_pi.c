@@ -7,9 +7,10 @@
 double calc_pi_gregory(const long max_iter_times)
 {
     register double cur_pi = 0;
+    #pragma omp parallel for reduction(+:cur_pi)
     for(register int idx=1; idx<=max_iter_times; idx+=2)
     {
-       cur_pi += (idx>>1 & 1) ? -4./idx : 4./idx;
+        cur_pi += (idx>>1 & 1) ? -4./idx : 4./idx;
     }
     return cur_pi;
 }
@@ -20,7 +21,6 @@ double calc_pi_(const int max_iter_num)
     register double pi = 0;
     register double sum = 0;
     register double step = 1.0 / (double) max_iter_num;
-
     for(register int i=1; i<=max_iter_num; ++i)
     {
         x = (i - .5) * step;
@@ -33,10 +33,9 @@ double calc_pi_(const int max_iter_num)
 double calc_pi_nilakantha(const long max_iter_times)
 {
     register double cur_pi = 3;
-    //#pragma omp parallel for
+    #pragma omp parallel for reduction(+:cur_pi)
     for(register int idx=2; idx<=max_iter_times; idx+=2)
     {
-       //#pragma omp critical
        cur_pi += (idx>>1 & 1) ? 4./(idx*(idx+1)*(idx+2)) : -4./(idx*(idx+1)*(idx+2));//TODO 
        //printf("%d %d %d \n", idx, idx+1, idx+2);
     }
