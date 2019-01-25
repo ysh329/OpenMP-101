@@ -4,6 +4,7 @@
 #include <assert.h>
 #include <time.h>
 
+//#define DEBUG
 #define DTYPE float
 
 void print_mat(const DTYPE *mat, const int r, const int c, const char *name);
@@ -18,6 +19,7 @@ DTYPE *mat_mult(const int m, const int n, const int k,
 #define MAT(i,j) mat[(i)*c+(j)]
 void print_mat(const DTYPE *mat, const int r, const int c, const char *name)
 {
+#ifdef DEBUG
     assert(mat && r>0 && c>0);
     printf("---- %s ----\n", name);
     for(int i=0; i<r; ++i)
@@ -29,6 +31,7 @@ void print_mat(const DTYPE *mat, const int r, const int c, const char *name)
         printf("\n");
     }
     printf("\n\n");
+#endif
     return;
 }
 
@@ -41,7 +44,9 @@ DTYPE *init_mat(DTYPE *mat, const int r, const int c, const DTYPE val)
 
 DTYPE *rand_mat(DTYPE *mat, const int r, const int c, const DTYPE min_val, const DTYPE max_val)
 {
+#ifdef DEBUG
     assert(mat && r>0 && c>0 && min_val<=max_val);
+#endif
     srand(time( NULL ));
     int range_val = ((int)(max_val - min_val)==0) ? 0x7ffffffff : (int)(max_val-min_val);
     for(int i=0; i<r; ++i)
@@ -62,20 +67,32 @@ DTYPE *mat_mult(const int m, const int n, const int k,
                 const DTYPE *b, const int ldb, 
                       DTYPE *c, const int ldc)
 {
+#ifdef DEBUG
     assert(a && b && c && lda>0 && ldb>0 && ldc>0);
     assert(m>0 && n>0 && k>0);
-    int nthreads = omp_get_num_threads();
-    printf("Number of threads = %d\n", nthreads);
+#endif
+    //int nthreads = omp_get_num_threads();
+    //printf("Number of threads = %d\n", nthreads);
     #pragma omp parallel for
-    for(int i=0; i<m; ++i)
+    for(register int i=0; i<m; i+=4)
     {
         //#pragma omp parallel for
-        for(int j=0; j<n; ++j)
+        for(register int j=0; j<n; ++j)
         {
             //#pragma omp parallel for
-            for(int p=0; p<k; ++p)
+            register DTYPE *a0p = &A(i,   0);
+            register DTYPE *a1p = &A(i+1, 0);
+            register DTYPE *a2p = &A(i+2, 0);
+            register DTYPE *a3p = &A(i+3, 0);
+            register DTYPE  bp0 = B(0,   j);
+
+            for(register int p=0; p<k; ++p)
             {
-                C(i, j) += A(i, p) * B(p, j);
+                C(i, j)   += *a0p * bp0;
+                C(i+1, j) += *a1p * bp0;
+                C(i+2, j) += *a2p * bp0;
+                C(i+3, j) += *a3p * bp0;
+                ++a0p; ++a1p; ++a2p; ++a3p;
             }
         }
     }
@@ -85,13 +102,18 @@ DTYPE *mat_mult(const int m, const int n, const int k,
 int main(int argc, char *argv[])
 {
     // init 
-    const int m = 2;
-    const int n = 3;
-    const int k = 5;
+    const int loop_times = 10;
+
+    const int m = 1024;
+    const int n = 1024;
+    const int k = 1024;
 
     const int lda = k;
     const int ldb = n;
     const int ldc = n;
+
+    double start_time = 0.0;
+    double end_time   = 0.0;
 
     DTYPE *a = calloc(m*lda, sizeof(DTYPE));
     DTYPE *b = calloc(k*ldb, sizeof(DTYPE));
@@ -110,7 +132,13 @@ int main(int argc, char *argv[])
     print_mat(c, m, ldc, "init c");
 
     // mat mult
-    c = mat_mult(m, n, k, a, lda, b, ldb, c, ldc);
+    for(int idx=0; idx<loop_times; ++idx)
+    {
+        start_time = omp_get_wtime();
+        c = mat_mult(m, n, k, a, lda, b, ldb, c, ldc);
+        end_time = omp_get_wtime();
+        printf("idx:%d time:%f second(s)\n", idx, end_time-start_time);
+    }
 
     print_mat(c, m, ldc, "mat mult c");
 
