@@ -1,1 +1,1 @@
-gcc -fopenmp map_reduce.c -o map_reduce
+gcc -fopenmp map_reduce.c -o map_reduce -std=c99
