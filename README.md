@@ -89,7 +89,7 @@ int main(int argc, char *argv[])
 
 ### 0.4 Compiling, linking etc 
 
-You need to add flag –fopenmp
+You need to add flag `–fopenmp`
 
 ```shell
 # compile using gcc
