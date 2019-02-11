@@ -1,1 +1,1 @@
-gcc -fopenmp relu.c -o relu
+gcc -fopenmp relu.c -o relu -std=c99

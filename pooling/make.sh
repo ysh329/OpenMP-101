@@ -1,1 +1,1 @@
-gcc -fopenmp pooling.c -o pooling -g
+gcc -fopenmp pooling.c -o pooling -std=c99
