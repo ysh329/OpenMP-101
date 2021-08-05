@@ -12,7 +12,9 @@
 - a standard API
 - omp pragmas are supported by major C/C++ , Fortran compilers (gcc, icc, etc).  
  
-A lot of good tutorials on-line: https://computing.llnl.gov/tutorials/openMP/ http://openmp.org/mp-documents/omp-hands-on-SC08.pdf 
+A lot of good tutorials on-line: 
+- https://hpc.llnl.gov/tuts/openMP/
+- http://openmp.org/mp-documents/omp-hands-on-SC08.pdf 
 
 ### 0.2 OpenMP programming model 
 
@@ -128,7 +130,7 @@ Intel’s Tim Mattson’s Introduction to OpenMP video tutorial is now available
 
 - [video](https://www.youtube.com/playlist?list=PLLX-Q6B8xqZ8n8bwjGdzBJ25X2utwnoEG)
 - [slide](https://www.openmp.org/wp-content/uploads/Intro_To_OpenMP_Mattson.pdf)
-- [exercise](http://www.openmp.org/wp-content/uploads/FMattson_OMP_exercises.zip)
+- [exercise](https://www.openmp.org/wp-content/uploads/Mattson_OMP_exercises.zip)
 
 Outline:
 
